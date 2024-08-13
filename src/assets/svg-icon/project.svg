@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/项目管理-选中@2x</title>
+    <g id="商照pc端" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Section-#2" transform="translate(-28.000000, -16.000000)">
+            <g id="icon/项目管理-选中" transform="translate(28.000000, 16.000000)">
+                <rect id="矩形" fill="#FFFFFF" opacity="0" x="0" y="0" width="32" height="32"></rect>
+                <g id="编组" transform="translate(6.000000, 6.000000)" stroke="#FFFFFF" stroke-width="2">
+                    <path d="M3.15789474,0 L6.38061736,0 C7.00642163,3.29130829e-16 7.59978793,0.278411473 7.99976199,0.7597136 L9.36865906,2.40695307 C9.76863312,2.88825519 10.3619994,3.16666667 10.9878037,3.16666667 L16.8421053,3.16666667 C18.5861624,3.16666667 20,4.5805043 20,6.3245614 L20,15.8421053 C20,17.5861624 18.5861624,19 16.8421053,19 L3.15789474,19 C1.41383763,19 1.43219155e-15,17.5861624 0,15.8421053 L0,3.15789474 C2.30503815e-16,1.41383763 1.41383763,3.20378093e-16 3.15789474,0 Z" id="路径" stroke-linejoin="round"></path>
+                    <line x1="5.88013733" y1="14.808925" x2="13.7748742" y2="14.808925" id="路径" stroke-linecap="round"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

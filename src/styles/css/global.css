@@ -1,0 +1,9 @@
+@import "./transition.css";
+@import "./reset.css";
+
+html,
+body,
+#app {
+  height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
