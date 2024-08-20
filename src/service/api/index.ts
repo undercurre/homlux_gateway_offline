@@ -15,3 +15,4 @@ export * from './lock';
 export * from './check-in';
 export * from './apartment-setting';
 export * from './personal';
+export * from './gateway';

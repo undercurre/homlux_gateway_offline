@@ -3,12 +3,12 @@ const dashboard: AuthRoute.Route = {
   path: '/dashboard',
   component: 'self',
   meta: {
-    title: '系统大盘',
+    title: '网关联网',
     localIcon: 'overview',
     order: 1,
     singleLayout: 'basic',
-    i18nTitle: 'routes.dashboard._value',
-    requiresAuth: true
+    requiresAuth: true,
+    hide: true
   }
 };
 

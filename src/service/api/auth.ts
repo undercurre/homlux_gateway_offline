@@ -26,14 +26,14 @@ export function fetchVerifyCode() {
  * @param {String} params.captcha - 用户手机验证码
  * @param {String} params.verifyCode - 校验码
  */
-export function fetchLogin(params: {
-  mobilePhone: string;
-  password?: string;
-  verifyCodeKey?: string;
-  verifyCode?: string;
-  captcha?: string;
-}) {
-  return request.post<ApiAuth.Token>('/v1/mzgd/cl/auth/web/login', params);
+export function fetchLogin(params: { username: string; password: string }) {
+  return request.post<{
+    sn: string;
+    pid: string;
+    username: string;
+    default: string;
+    authTime: string;
+  }>('/login', params);
 }
 
 /**

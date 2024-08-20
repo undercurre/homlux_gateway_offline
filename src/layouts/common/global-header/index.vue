@@ -69,7 +69,7 @@ const authStore = useAuthStore();
 const projectStore = useProjectStore();
 const routeStore = useRouteStore();
 
-projectStore.getAllProject();
+// projectStore.getAllProject();
 
 const options = computed(() => {
   return projectStore.projects.map(item => {

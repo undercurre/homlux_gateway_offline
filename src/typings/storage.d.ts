@@ -5,6 +5,7 @@ declare namespace StorageInterface {
     themeColor: string;
     /** 主题配置 */
     themeSettings: Theme.Setting;
+    isSessionActive: boolean;
   }
 
   /** localStorage的存储数据的类型 */
@@ -23,5 +24,6 @@ declare namespace StorageInterface {
     curProjectId: string;
     /** 本地语言缓存 */
     lang: I18nType.LangType;
+    username: string;
   }
 }

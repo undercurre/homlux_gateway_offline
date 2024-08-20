@@ -4,13 +4,13 @@ type ServiceEnv = Record<ServiceEnvType, ServiceEnvConfig>;
 /** 不同请求服务的环境域名配置 */
 const serviceEnv: ServiceEnv = {
   dev: {
-    url: 'https://test.meizgd.com/mzaio'
+    url: 'http://localhost:3000'
   },
   test: {
-    url: 'https://test.meizgd.com/mzaio'
+    url: 'http://localhost:3000'
   },
   prod: {
-    url: 'https://mzaio.meizgd.com/mzaio'
+    url: 'http://localhost:3000'
   }
 };
 

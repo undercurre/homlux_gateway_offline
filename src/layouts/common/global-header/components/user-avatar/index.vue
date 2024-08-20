@@ -3,7 +3,7 @@
     <hover-container class="px-12px" :inverted="theme.header.inverted">
       <icon-local-avatar class="text-32px" />
       <span class="pl-8px text-16px font-medium">
-        {{ auth.userInfo.userName || '用户' + auth.userInfo.mobilePhone }}
+        {{ auth.offlineAuth.username ? '用户' + auth.offlineAuth.username : '未登录' }}
       </span>
     </hover-container>
   </n-dropdown>
@@ -78,11 +78,6 @@ const options: DropdownOption[] = [
     key: 'toggle-role',
     icon: iconRender({ icon: 'carbon:arrows-horizontal' }),
     show: auth.userInfo.roleList.findIndex(item => item.roleLevel === 0) >= 0 // 仅存在总管角色的有切换角色功能
-  },
-  {
-    label: '个人信息',
-    key: 'user-info',
-    icon: iconRender({ icon: 'carbon:user' })
   },
   {
     label: '代理商信息',

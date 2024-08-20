@@ -98,9 +98,9 @@ async function handleSmsCode() {
 async function handleSubmit() {
   await formRef.value?.validate();
 
-  const { phone, code } = model;
+  // const { phone, code } = model;
 
-  await auth.login({ mobilePhone: phone, captcha: code });
+  // await auth.login({ mobilePhone: phone, captcha: code });
 }
 </script>
 

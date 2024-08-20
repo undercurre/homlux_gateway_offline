@@ -1,9 +1,9 @@
 import { unref, nextTick } from 'vue';
 import { defineStore } from 'pinia';
 import { router } from '@/router';
-import { fetchDictList, fetchLogin, fetchSysUserByPage } from '@/service';
+import { fetchLogin, fetchSysUserByPage } from '@/service';
 import { useRouterPush } from '@/composables';
-import { localStg } from '@/utils';
+import { localStg, sessionStg } from '@/utils';
 import { $t } from '@/locales';
 import { useTabStore } from '../tab';
 import { useRouteStore } from '../route';
@@ -19,6 +19,10 @@ interface AuthState {
   loginLoading: boolean;
   users: Array<ApiUser.SysUser>;
   dictList: ApiAuth.DictList;
+  showForgetPassword: boolean;
+  offlineAuth: {
+    username: string;
+  };
 }
 
 export const useAuthStore = defineStore('auth-store', {
@@ -27,7 +31,11 @@ export const useAuthStore = defineStore('auth-store', {
     token: getToken(),
     loginLoading: false,
     users: [],
-    dictList: []
+    dictList: [],
+    showForgetPassword: false,
+    offlineAuth: {
+      username: ''
+    }
   }),
   getters: {
     projectTypeDict(state) {
@@ -147,10 +155,10 @@ export const useAuthStore = defineStore('auth-store', {
   },
   actions: {
     async getDictList() {
-      const list = await fetchDictList();
-      if (list.data) {
-        this.dictList = list.data;
-      }
+      // const list = await fetchDictList();
+      // if (list.data) {
+      //   this.dictList = list.data;
+      // }
     },
     async getAllUser() {
       const us = await fetchSysUserByPage({ pageSize: 99999 });
@@ -236,6 +244,8 @@ export const useAuthStore = defineStore('auth-store', {
       localStg.set('userInfo', userInfo);
       localStg.set('token', token);
 
+      sessionStg.set('isSessionActive', true);
+
       // 更新状态
       this.userInfo = userInfo;
       this.token = token;
@@ -248,29 +258,47 @@ export const useAuthStore = defineStore('auth-store', {
      * @param param.password 密码
      * @param param.verifyCode 验证码
      */
-    async login(param: {
-      mobilePhone: string;
-      password?: string;
-      captcha?: string;
-      verifyCode?: string;
-      verifyCodeKey?: string;
-    }) {
-      const { mobilePhone, password, captcha, verifyCode, verifyCodeKey } = param;
+    async login(param: { username: string; password: string }) {
+      const { username, password } = param;
 
-      this.loginLoading = true;
-
-      const { data } = await fetchLogin({
-        mobilePhone,
-        password,
-        verifyCodeKey,
-        verifyCode,
-        captcha
+      const res = await fetchLogin({
+        username,
+        password
       });
 
-      if (data) {
-        await this.handleActionAfterLogin(data);
+      const route = useRouteStore();
+      const { toLoginRedirect } = useRouterPush(false);
+
+      if (!res.error) {
+        this.offlineAuth.username = res.data.username;
+
+        await route.initAuthRoute();
+
+        localStg.set('token', 'offlinetoken');
+        localStg.set('username', res.data.username);
+
+        sessionStg.set('isSessionActive', true);
+
+        // 跳转登录后的地址
+        toLoginRedirect();
+
+        // 登录成功弹出欢迎提示
+        if (route.isInitAuthRoute) {
+          window.$notification?.success({
+            title: $t('page.login.common.loginSuccess'),
+            content: $t('page.login.common.welcomeBack', {
+              userName: `用户${res.data.username}`
+            }),
+            duration: 3000
+          });
+        }
+      } else {
+        window.$notification?.error({
+          title: '登录失败',
+          content: '密码错误',
+          duration: 3000
+        });
       }
-      this.loginLoading = false;
     }
   }
 });

@@ -5,7 +5,7 @@
       :collapsed="app.siderCollapse"
       :collapsed-width="theme.sider.collapsedWidth"
       :collapsed-icon-size="22"
-      :options="menus"
+      :options="menus.slice(0, 1)"
       :expanded-keys="expandedKeys"
       :indent="18"
       :inverted="!theme.darkMode && theme.sider.inverted"

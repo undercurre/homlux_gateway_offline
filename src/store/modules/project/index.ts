@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { fetchAllMerchantUser, fetchProjectByPage, queryProjectByUser } from '~/src/service';
 import { localStg } from '~/src/utils';
 
 interface ProjectState {
@@ -39,7 +38,6 @@ export const useProjectStore = defineStore('project-store', {
     /** 项目详情打开情况 */
     initCurProjectId() {
       this.getAllProjectWithAuth();
-      console.log('初始化当前项目');
       const data = localStg.get('curProjectId');
       this.curId = data || '';
     },
@@ -55,24 +53,24 @@ export const useProjectStore = defineStore('project-store', {
       this.curId = '';
     },
     async getAllProject() {
-      const ps = await fetchProjectByPage({ pageSize: 99999 });
-      if (ps.data) {
-        this.projects = ps.data.content;
-      }
+      // const ps = await fetchProjectByPage({ pageSize: 99999 });
+      // if (ps.data) {
+      //   this.projects = ps.data.content;
+      // }
     },
     async getAllProjectWithAuth() {
-      const ps = await queryProjectByUser();
-      if (ps.data) {
-        this.projectsWithAuth = ps.data;
-      }
+      // const ps = await queryProjectByUser();
+      // if (ps.data) {
+      //   this.projectsWithAuth = ps.data;
+      // }
     },
     async getAllUser() {
-      const us = await fetchAllMerchantUser({ projectId: this.curId });
-      if (us.data) {
-        this.users = us.data;
-      }
-      console.log('代理商下用户列表更新');
-      return us.data;
+      // const us = await fetchAllMerchantUser({ projectId: this.curId });
+      // if (us.data) {
+      //   this.users = us.data;
+      // }
+      // console.log('代理商下用户列表更新');
+      // return us.data;
     }
   }
 });

@@ -3,12 +3,12 @@ const management: AuthRoute.Route = {
   path: '/project-manager',
   component: 'self',
   meta: {
-    title: '项目管理',
-    i18nTitle: 'routes.management._value',
+    title: '项目管理222',
     localIcon: 'project',
     singleLayout: 'basic',
-    order: 9,
-    requiresAuth: true
+    order: 10,
+    requiresAuth: true,
+    hide: true
   }
 };
 

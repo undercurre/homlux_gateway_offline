@@ -9,7 +9,8 @@ const management: AuthRoute.Route = {
     singleLayout: 'basic',
     order: 10,
     requiresAuth: true,
-    permissions: [0, 1]
+    permissions: [0, 1],
+    hide: true
   }
 };
 

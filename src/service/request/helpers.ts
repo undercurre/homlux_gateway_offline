@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios';
 import { useAuthStore } from '@/store';
-import { localStg } from '@/utils';
+import { localStg, sessionStg } from '@/utils';
 import { fetchUpdateToken } from '../api';
 
 /**
@@ -13,6 +13,7 @@ export async function handleRefreshToken(axiosConfig: AxiosRequestConfig) {
   const { data } = await fetchUpdateToken(refreshToken);
   if (data) {
     localStg.set('token', data.token);
+    sessionStg.set('isSessionActive', true);
 
     const config = { ...axiosConfig };
     if (config.headers) {

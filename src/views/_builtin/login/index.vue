@@ -14,7 +14,9 @@
     <div class="absolute right-0 z-4 w-36.3% h-full bg-transparent">
       <div class="w-full h-full flex-col justify-between items-center">
         <header class="flex-y-center justify-between">
-          <span class="text-40px mt-120px mb-80px text-#23322A tracking-3px font-500">登录账号</span>
+          <span class="text-40px mt-120px mb-80px text-#23322A tracking-3px font-500">
+            {{ !auth.showForgetPassword ? '登录边缘网关' : '忘记密码' }}
+          </span>
         </header>
         <main class="w-full">
           <div class="w-full mb-20px">
@@ -24,15 +26,29 @@
               justify-content="space-evenly"
               :on-update:value="updateTabValue"
             >
-              <n-tab-pane name="pwd-login" tab="手机号登录"></n-tab-pane>
-              <n-tab-pane name="code-login" tab="验证码登录"></n-tab-pane>
+              <!-- <n-tab-pane name="pwd-login" tab="手机号登录"></n-tab-pane>
+              <n-tab-pane name="code-login" tab="验证码登录"></n-tab-pane> -->
             </n-tabs>
           </div>
         </main>
-        <div class="w-full px-96px flex-1">
+        <div v-if="!auth.showForgetPassword" class="w-full px-96px flex-1">
           <transition name="fade-slide" mode="out-in" appear>
             <component :is="activeModule.component" />
           </transition>
+        </div>
+        <div v-if="auth.showForgetPassword" class="flex-1 flex-col justify-between p-40px">
+          <p class="text-26px text-gray-500">忘记边缘网关密码，请联系项目归属代理商进行密码重置，谢谢</p>
+
+          <n-button
+            class="mb-80px h-44px rounded-20px text-20px"
+            type="primary"
+            size="large"
+            :block="true"
+            :bordered="false"
+            @click="forgetBack"
+          >
+            已知晓，返回
+          </n-button>
         </div>
       </div>
     </div>
@@ -45,11 +61,12 @@ import type { Component } from 'vue';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { loginModuleLabels } from '@/constants';
-import { useThemeStore } from '@/store';
+import { useAuthStore, useThemeStore } from '@/store';
 import { mixColor } from '@/utils';
 import { CodeLogin, LoginBg, PwdLogin, ResetPwd } from './components';
 
 const route = useRoute();
+const auth = useAuthStore();
 
 const theme = useThemeStore();
 
@@ -84,6 +101,10 @@ const bgColor = computed(() => {
 
 function updateTabValue(value: string | number) {
   curModuleKey.value = value as string;
+}
+
+function forgetBack() {
+  auth.showForgetPassword = false;
 }
 
 onMounted(() => {

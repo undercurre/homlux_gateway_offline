@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full h-full flex-col justify-around">
+  <div v-if="!auth.showForgetPassword" class="w-full h-full flex-col justify-around">
     <n-form ref="formRef" :model="model" :rules="rules" size="large" :show-label="false">
       <n-form-item path="userName">
-        <n-input v-model:value="model.userName" :placeholder="$t('page.login.common.userNamePlaceholder')" clearable>
+        <n-input v-model:value="model.userName" placeholder="请输入用户名" clearable>
           <template #prefix>
             <svg xmlns="http://www.w3.org/2000/svg" width="1.6rem" height="1.6rem" viewBox="0 0 20 20">
               <g fill="#A2A2A2">
@@ -38,7 +38,7 @@
       <n-space :vertical="true" :size="24">
         <div class="flex-y-center justify-end">
           <!-- <n-checkbox v-model:checked="rememberMe">{{ $t('page.login.pwdLogin.rememberMe') }}</n-checkbox> -->
-          <n-button class="text-18px text-#21B96C font-400" :text="true" @click="toLoginModule('reset-pwd')">
+          <n-button class="text-18px text-#21B96C font-400" :text="true" @click="toForgetPassword">
             {{ $t('page.login.pwdLogin.forgetPassword') }}
           </n-button>
         </div>
@@ -72,14 +72,12 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import type { FormInst, FormRules } from 'naive-ui';
-// import { loginModuleLabels } from '@/constants';
-import { fetchVerifyCode } from '@/service';
 import { useAuthStore } from '@/store';
-import { useRouterPush } from '@/composables';
-import { formRules } from '@/utils';
-
 const auth = useAuthStore();
-const { toLoginModule } = useRouterPush();
+
+const toForgetPassword = () => {
+  auth.showForgetPassword = true;
+};
 
 const formRef = ref<HTMLElement & FormInst>();
 
@@ -89,8 +87,8 @@ const model = reactive({
 });
 
 const rules: FormRules = {
-  userName: formRules.phone,
-  password: formRules.pwd
+  // userName: formRules.userName,
+  // password: formRules.pwd
 };
 
 async function handleSubmit() {
@@ -98,19 +96,17 @@ async function handleSubmit() {
 
   const { userName, password } = model;
 
-  const codeRes = await fetchVerifyCode();
+  // const codeRes = await fetchVerifyCode();
 
-  if (codeRes.error) {
-    window.$message?.error('校验码获取失败！');
+  // if (codeRes.error) {
+  //   window.$message?.error('校验码获取失败！');
 
-    return;
-  }
+  //   return;
+  // }
 
   await auth.login({
-    mobilePhone: userName,
-    password,
-    verifyCode: codeRes.data.verifyCode,
-    verifyCodeKey: codeRes.data.verifyCodeKey
+    username: userName,
+    password
   });
 }
 
